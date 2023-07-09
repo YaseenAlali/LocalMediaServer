@@ -1,0 +1,57 @@
+﻿@page
+@model WebAppTest1.Pages.TorrentPageModel
+@{
+
+}
+@using TS = WebAppTest1.HelperFunctions.TorrentService;
+@using HF = WebAppTest1.HelperFunctions.General;
+
+@{TS.parseTorrentGet(HttpContext);}
+<html>
+	<body>
+	<div>
+		<div class="wave"></div>
+		<div class="wave"></div>
+		<div class="wave"></div>
+	</div>
+	@if (!HF.admin)
+	{
+		<h1> login to control the torrent client</h1>
+	}
+	else{
+	@if (TS.title != "")
+	{
+		
+		<h1> @TS.title</h1>
+		<h2> seeders count: @TS.seeders</h2>
+		
+	}
+		<form id="torrentForm">
+			<div>
+				<input type="text" id="searchTitle" style="width:300px;" name="searchTitle"/>
+				<label for="searchTitle"> Title</label>
+			</div>
+			<div style="height:30px;">
+
+			</div>
+			<div>
+				<input type="text" id="seachCatogry" style="width:300px;" name="seachCatogry" />
+				<label for="searchCatogry">Catogry</label>
+			</div>
+			<input type="submit" value="search"/>
+		@if (TS.title != "")
+		{
+			<input type="submit" value="Download" id="DownloadTorrent" name="DownloadTorrent">
+		}
+		</form>
+	}
+	</body>
+</html>
+
+<script>
+		clearfunc();
+		function clearfunc() {
+			document.getElementById("torrentForm").reset();
+		}
+
+</script>

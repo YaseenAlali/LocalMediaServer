@@ -1,0 +1,45 @@
+﻿@page
+@model PrivacyModel
+@{
+    ViewData["Title"] = "Download from youtube";
+}
+<h1>@ViewData["Title"]</h1>
+@using HF = WebAppTest1.HelperFunctions.General;
+@using FS = WebAppTest1.HelperFunctions.FileSystem;
+
+
+@{
+    HF.ParseGetLogIn(HttpContext);
+    FS.ParseGetYT(HttpContext);
+}
+<body>
+    <div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+<form>
+   <div>
+        <div>
+            <input name="URL" id="URL" type="text" style="width: 350px;" />
+            <label for="URL">Download youtube by URL</label>
+        </div>
+        <div>
+            <input name="audio" id="audio" value= "false" type="checkbox" onclick="value=true"/>
+            <label for="audio"> Audio only</label>
+        </div>
+   </div>
+
+
+   <div>
+        <div>
+            <input type="text" name="NAME" id="NAME" style="width: 350px;" />
+            <label for="NAME"> Download youtube by name</label>
+        </div>
+        <div>
+            <input type="submit" value="Download" />
+        </div>
+   </div>
+   <p>@FS.SongIndex</p>
+</form>
+</body>

@@ -1,0 +1,43 @@
+﻿@page
+@model WebAppTest1.Pages.StreamPageModel
+@{
+
+}
+@using HF = WebAppTest1.HelperFunctions.General;
+@using FS = WebAppTest1.HelperFunctions.FileSystem;
+@using SV = WebAppTest1.HelperFunctions.StreamingService;
+@{HF.ParseGetLogIn(HttpContext);}
+
+<body>
+    <div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+@if (HF.admin){
+    @if (SV.StreamSongIndex != -1){
+
+<video style="width:60vw; height:60vh;" controls autoplay="autoplay" src="@HF.SongsListPath[SV.StreamSongIndex].Split(@"D:\stuff\music\")[1]">
+	<a href="@HF.SongsListPath[SV.StreamSongIndex].Split(@"D:\stuff\music\")[1]" download >Download video</a>
+    <!--
+    <track label="English"
+           kind="subtitles"
+           srclang="en"
+           src="cap.srt"
+           default />
+    -->
+        </video>
+    }
+    else
+    {
+        <h1>
+            Choose a file to stream first!
+        </h1>
+    }
+}
+else{
+    <h1>
+        login to view streams
+    </h1>
+}
+</body>

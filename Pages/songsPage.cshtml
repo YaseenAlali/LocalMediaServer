@@ -1,0 +1,75 @@
+﻿@page
+@model WebAppTest1.Pages.qbModel
+@{
+}
+@using HF = WebAppTest1.HelperFunctions.General;
+@using FS = WebAppTest1.HelperFunctions.FileSystem;
+@using SV = WebAppTest1.HelperFunctions.StreamingService;
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Songs</title>
+</head>
+<body>
+    <div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    @{HF.ParseGetLogIn(HttpContext);}
+        @if (!HF.admin) {
+        <h1> login to view files</h1>
+
+    }
+    else {        
+
+        string temp1 = $"button_0";
+        string temp2 = $"Sbutton-0";
+        string temp3 = HF.SongsList[0];
+        HF.ParseGetLogIn(HttpContext);
+        FS.ParseGetDL(HttpContext);
+        SV.ParseGetStreamSong(HttpContext);
+
+
+        <table>
+        <tr>
+            <th>Song Name</th>
+            <th></th>
+        </tr>
+
+        <form>
+            
+            @for (int index = 0; index < HF.SongsList.Count;
+            temp1 = $"button_{index + 1}", temp2 = $"Sbutton-{index + 1}",temp3=HF.SongsList[index], index++)
+            {
+                    @if (temp3.Substring(0,5) != HF.SongsList[index].Substring(0,5))
+                    {
+                        <tr class="blank_row">
+                            <td colspan="3"></td>
+                        </tr>
+                    
+                    }
+                    <tr>
+                        <td>@HF.SongsList[index]</td>
+                        <td>
+                    <div>
+                    <input name=@temp1 value="Download" type="submit" style="width:200px;" />
+                    <input name=@temp2 value="Choose for streaming" type="submit" style="width:200px;" />
+                        </div>
+                    </td>
+            </tr>
+                    
+            }
+            
+        </form>
+        
+
+    </table>
+    <form>
+        <input type="submit" value="refreshSongs" id="refreshSongs" onclick="value:true;" style="margin-top:25px;" name="refreshSongs">
+    </form>
+    }
+    
+</body>
+</html>

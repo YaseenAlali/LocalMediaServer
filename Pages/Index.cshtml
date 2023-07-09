@@ -1,0 +1,115 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home";
+}
+@using HF = WebAppTest1.HelperFunctions.General;
+@using FS = WebAppTest1.HelperFunctions.FileSystem;
+@using SF = WebAppTest1.HelperFunctions.Security;
+@{
+    HF.ParseGetLogIn(HttpContext);
+}
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
+    @if (!HF.admin){
+
+    <h1>Login to access files list</h1>
+
+    <h4>OTP: @SF.oneTimePad , @SF.subValue , @SF.modValue</h4>
+    <form>
+        
+        <div style="margin-top:35px;">
+             @Html.Password("password", "", new { id = "password", Textmode = "Password", style="width:200px;"})
+            <div>
+                <input type="submit" value="log in" style="width:200px;"/> 
+            </div>
+        </div>
+    </form>
+    
+        
+    }
+    else
+    {
+        <!--
+        <form>
+            <h1>Access authorized</h1>
+            <input type="submit" value="Log out" onclick="value=true" name="logout" style="width:200px;"/>
+        </form>
+        -->
+        <div class="slideshow-container">
+
+            <div class="mySlides fade">
+                <a href="/songsPage">
+                <img src="musiclogo.png" style="width:100%; height:100%; margin-bottom:25px;">
+                </a>
+                
+                <div class="text" style="color: black; margin-top:10%; font-size:20px;">Movies and songs</div>
+
+            </div>
+
+            <div class="mySlides fade">
+                <a href="/YTDL">
+                <img src="downloadlogo.png" style="width:100%; height:100%; margin-bottom:25px;">
+                </a>
+                
+                <div class="text" style="color: black; font-size:20px;">Youtube download</div>
+            </div>
+
+            <div class="mySlides fade">
+                <a href="http://192.168.1.2:50005">
+                <img src="qbitlogo.png" style=" width:100%; height:100%; margin-bottom:50px;">
+                
+                    <div class="text" style="color: black; font-size:20px;">Qbit interface</div>
+                </a>
+            </div>
+
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+        </div>
+        <br>
+
+        <div style="text-align:center">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+        </div>
+
+        <script>
+
+            function plusSlides(n) {
+                showSlides(slideIndex += n);
+            }
+
+            function currentSlide(n) {
+                showSlides(slideIndex = n);
+            }
+
+            
+            let slideIndex = 0;
+            showSlides();
+
+            function showSlides() {
+                let i;
+                let slides = document.getElementsByClassName("mySlides");
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].style.display = "none";
+                }
+                slideIndex++;
+                if (slideIndex > slides.length) { slideIndex = 1 }
+                slides[slideIndex - 1].style.display = "block";
+                setTimeout(showSlides, 30000); // Change image every 2 seconds
+            }
+        </script>
+    }
+</body>
+</html>
